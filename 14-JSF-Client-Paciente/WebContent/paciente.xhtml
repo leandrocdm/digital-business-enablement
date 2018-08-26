@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="churros">
+		<f:loadBundle var="m" basename="paciente"/>
+		<h1>#{m.title}</h1>
+	 	<h:form>
+	 		<h:messages />
+	 		<h:inputHidden value="#{pacienteBean.paciente.codigo}" />
+	 		<div class="form-group">
+	 			<h:outputLabel value="#{m.lbl_name}" for="nome" />
+	 			<h:inputText required="true"
+	 				validator="#{pacienteBean.validarNome}"
+	 				requiredMessage="O nome é obrigatório"
+	 				id="nome" styleClass="form-control" 
+	 				value="#{pacienteBean.paciente.nome}" >
+	 				<f:validateLength minimum="3" maximum="50"/>
+	 			</h:inputText>
+	 			<h:message for="nome" styleClass="text-danger"/>	
+	 		</div>
+	 		<div class="form-group">
+	 			<h:outputLabel value="#{m.lbl_date}" for="data" />
+	 			<h:inputText id="data" styleClass="form-control"
+	 				value="#{pacienteBean.paciente.dataNascimento.time}">
+	 				<f:convertDateTime pattern="dd/MM/yyyy"/>
+	 			</h:inputText>
+	 			<h:message for="data" styleClass="text-danger"/>
+	 		</div>
+	 		<div class="form-group">
+	 			<h:selectBooleanCheckbox id="doador" 
+	 				value="#{pacienteBean.paciente.doador}" />
+	 			<h:outputLabel value="#{m.lbl_donor}" for="doador" />
+	 		</div>
+	 		<h:commandButton action="#{pacienteBean.salvar}" 
+	 			value="#{m.btn_save}" styleClass="btn btn-primary" />
+	 		<h:link outcome="lista-paciente">Lista de Pacientes</h:link>	
+	 	</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
